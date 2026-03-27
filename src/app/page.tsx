@@ -16,9 +16,11 @@ import {
   Loader2,
   MapPin,
   MapPinned,
+  Menu,
   Palette,
   Ruler,
   Type as TypeIcon,
+  X,
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -153,7 +155,8 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [searching, setSearching] = useState(false);
   const [exportStage, setExportStage] = useState<'idle' | 'loading' | 'processing'>('idle');
-  const [activeMobile, setActiveMobile] = useState<'a' | 'b' | 'c' | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isCompactLayout, setIsCompactLayout] = useState(false);
   const [showArtisticModal, setShowArtisticModal] = useState(false);
   const [showPresetModal, setShowPresetModal] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
@@ -238,6 +241,41 @@ export default function Home() {
     window.addEventListener('resize', updateScale);
     return () => window.removeEventListener('resize', updateScale);
   }, [app.width, app.height]);
+
+  useEffect(() => {
+    const syncLayoutMode = () => {
+      const compact = window.innerWidth <= 1180;
+      setIsCompactLayout(compact);
+      if (!compact) {
+        setSidebarOpen(false);
+      }
+    };
+
+    syncLayoutMode();
+    window.addEventListener('resize', syncLayoutMode);
+    return () => window.removeEventListener('resize', syncLayoutMode);
+  }, []);
+
+  useEffect(() => {
+    if (!isCompactLayout) {
+      document.body.style.overflow = '';
+      return;
+    }
+    document.body.style.overflow = sidebarOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isCompactLayout, sidebarOpen]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSidebarOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   const insertViaPoint = useCallback((lat: number, lon: number) => {
     setApp((prev) => {
@@ -1651,44 +1689,17 @@ export default function Home() {
 
   return (
     <div className="app-shell">
-      <nav className="mobile-nav">
+      <nav className="mobile-nav" aria-label="Primary mobile actions">
         <button
           id="nav-btn-a"
           type="button"
-          data-target="mobile-sheet-a"
-          className={activeMobile === 'a' ? 'active' : ''}
-          aria-label="Location"
-          title="Location"
-          onClick={() => setActiveMobile(activeMobile === 'a' ? null : 'a')}
+          className={sidebarOpen ? 'active' : ''}
+          aria-label="Open controls"
+          title="Controls"
+          onClick={() => setSidebarOpen((prev) => !prev)}
         >
           <span className="mobile-nav-icon" aria-hidden="true">
-            <Compass size={18} strokeWidth={2.2} />
-          </span>
-        </button>
-        <button
-          id="nav-btn-b"
-          type="button"
-          data-target="mobile-sheet-b"
-          className={activeMobile === 'b' ? 'active' : ''}
-          aria-label="Style"
-          title="Style"
-          onClick={() => setActiveMobile(activeMobile === 'b' ? null : 'b')}
-        >
-          <span className="mobile-nav-icon" aria-hidden="true">
-            <Palette size={18} strokeWidth={2.2} />
-          </span>
-        </button>
-        <button
-          id="nav-btn-c"
-          type="button"
-          data-target="mobile-sheet-c"
-          className={activeMobile === 'c' ? 'active' : ''}
-          aria-label="Output"
-          title="Output"
-          onClick={() => setActiveMobile(activeMobile === 'c' ? null : 'c')}
-        >
-          <span className="mobile-nav-icon" aria-hidden="true">
-            <Ruler size={18} strokeWidth={2.2} />
+            <Menu size={18} strokeWidth={2.2} />
           </span>
         </button>
         <button
@@ -1721,21 +1732,31 @@ export default function Home() {
         </button>
       </nav>
 
-      <aside className="desktop-sidebar">
+      <aside className={`desktop-sidebar${sidebarOpen ? ' is-open' : ''}`}>
         <div className="brand">
-          <button
-            type="button"
-            className="brand-btn"
-            onClick={() => setShowAboutModal(true)}
-          >
-            <strong>
-              <span className="brand-icon" aria-hidden="true">
-                <MapPinned size={16} strokeWidth={2.2} />
-              </span>{' '}
-              Map Craft by KREASAI.COM
-            </strong>
-            <span>Neobrutal Map Artist</span>
-          </button>
+          <div className="brand-top">
+            <button
+              type="button"
+              className="brand-btn"
+              onClick={() => setShowAboutModal(true)}
+            >
+              <strong>
+                <span className="brand-icon" aria-hidden="true">
+                  <MapPinned size={16} strokeWidth={2.2} />
+                </span>{' '}
+                Map Craft by KREASAI.COM
+              </strong>
+              <span>Creative Map Studio</span>
+            </button>
+            <button
+              type="button"
+              className="sidebar-close-btn"
+              aria-label="Close controls"
+              onClick={() => setSidebarOpen(false)}
+            >
+              <X size={16} strokeWidth={2.2} />
+            </button>
+          </div>
         </div>
         <div className="controls-scroll">
           {sectionLocation}
@@ -1746,33 +1767,70 @@ export default function Home() {
           {sectionMat}
           {sectionOutput}
         </div>
-        <button
-          id="export-btn"
-          type="button"
-          className="export-btn"
-          disabled={exporting}
-          onClick={() => void exportPng()}
-        >
-          <span className="btn-icon" aria-hidden="true">
-            {exportStage === 'loading' || exportStage === 'processing' ? (
-              <Loader2 size={16} strokeWidth={2.2} className="spin" />
-            ) : (
-              <Download size={16} strokeWidth={2.2} />
-            )}
-          </span>
-          {exportStage === 'loading'
-            ? 'Loading map...'
-            : exportStage === 'processing'
-              ? 'Processing...'
-              : 'Generate Export'}
-        </button>
-        <p className="hint" id="export-status">
-          {exportStage === 'idle' ? 'Ready to export' : exportStage}
-        </p>
+        <div className="sidebar-footer">
+          <button
+            id="export-btn"
+            type="button"
+            className="export-btn"
+            disabled={exporting}
+            onClick={() => void exportPng()}
+          >
+            <span className="btn-icon" aria-hidden="true">
+              {exportStage === 'loading' || exportStage === 'processing' ? (
+                <Loader2 size={16} strokeWidth={2.2} className="spin" />
+              ) : (
+                <Download size={16} strokeWidth={2.2} />
+              )}
+            </span>
+            {exportStage === 'loading'
+              ? 'Loading map...'
+              : exportStage === 'processing'
+                ? 'Processing...'
+                : 'Generate Export'}
+          </button>
+          <p className="hint" id="export-status">
+            {exportStage === 'idle' ? 'Ready to export' : exportStage}
+          </p>
+        </div>
       </aside>
 
       <main className="preview-main">
-        <div id="poster-scaler" className="poster-scaler" style={{ transform: `scale(${scale})` }}>
+        <header className="preview-toolbar">
+          <button
+            type="button"
+            className="toolbar-btn"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu size={16} strokeWidth={2.2} />
+            Controls
+          </button>
+          <div className="toolbar-actions">
+            <button
+              type="button"
+              className="toolbar-btn"
+              onClick={() => setShowAboutModal(true)}
+            >
+              <BadgeInfo size={16} strokeWidth={2.2} />
+              About
+            </button>
+            <button
+              type="button"
+              className="toolbar-btn primary"
+              disabled={exporting}
+              onClick={() => void exportPng()}
+            >
+              {exportStage === 'loading' || exportStage === 'processing' ? (
+                <Loader2 size={16} strokeWidth={2.2} className="spin" />
+              ) : (
+                <Download size={16} strokeWidth={2.2} />
+              )}
+              Export
+            </button>
+          </div>
+        </header>
+
+        <div className="preview-stage">
+          <div id="poster-scaler" className="poster-scaler" style={{ transform: `scale(${scale})` }}>
           <div
             id="poster-container"
             ref={posterRef}
@@ -1978,72 +2036,17 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </div>
       </main>
 
-      {(['a', 'b', 'c'] as const).map((mobileSheet) => {
-        const isOpen = activeMobile === mobileSheet;
-        const title =
-          mobileSheet === 'a'
-            ? 'Location & Markers'
-            : mobileSheet === 'b'
-              ? 'Map Style'
-              : 'Output';
-
-        return (
-          <div
-            key={mobileSheet}
-            className="mobile-sheet"
-            id={`mobile-sheet-${mobileSheet}`}
-            style={{ display: isOpen ? 'flex' : 'none' }}
-          >
-            <button
-              type="button"
-              className="modal-backdrop close-sheet-btn"
-              aria-label="Close mobile sheet"
-              onClick={() => setActiveMobile(null)}
-            />
-            <div className="mobile-sheet-panel">
-              <header>
-                <h2>{title}</h2>
-                <button
-                  type="button"
-                  className="close-sheet-btn"
-                  onClick={() => setActiveMobile(null)}
-                >
-                  ✕
-                </button>
-              </header>
-              <div
-                className="mobile-sheet-content"
-                id={`mobile-sheet-${mobileSheet}-content`}
-              >
-                {mobileSheet === 'a' && (
-                  <>
-                    {sectionLocation}
-                    {sectionMarkerRoute}
-                  </>
-                )}
-                {mobileSheet === 'b' && (
-                  <>
-                    {sectionStyle}
-                    {sectionComposition}
-                    {sectionTypography}
-                  </>
-                )}
-                {mobileSheet === 'c' && (
-                  <>
-                    {sectionMat}
-                    {sectionOutput}
-                  </>
-                )}
-              </div>
-              <button id={`mobile-reset-${mobileSheet}-btn`} type="button" onClick={resetAll}>
-                Reset to Defaults
-              </button>
-            </div>
-          </div>
-        );
-      })}
+      {isCompactLayout && (
+        <button
+          type="button"
+          className={`layout-backdrop ${sidebarOpen ? 'show' : ''}`}
+          aria-label="Close controls panel"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
       {showAboutModal && (
         <div className="modal" id="credits-modal">
