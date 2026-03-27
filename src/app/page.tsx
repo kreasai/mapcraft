@@ -5,6 +5,21 @@ import type {
   Map as MapLibreMap,
   Marker as MapLibreMarker,
 } from 'maplibre-gl';
+import {
+  BadgeInfo,
+  Compass,
+  Download,
+  Eye,
+  EyeOff,
+  Frame,
+  Layers3,
+  Loader2,
+  MapPin,
+  MapPinned,
+  Palette,
+  Ruler,
+  Type as TypeIcon,
+} from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
@@ -1038,7 +1053,7 @@ export default function Home() {
     <section className="neo-section" id="section-location">
       <h3 className="section-title">
         <span className="section-icon" aria-hidden="true">
-          🧭
+          <Compass size={14} strokeWidth={2.2} />
         </span>
         1. Define Location
       </h3>
@@ -1090,7 +1105,9 @@ export default function Home() {
           className="icon-btn"
           onClick={() => mutate({ showCountry: !app.showCountry })}
         >
-          <span id="country-eye-icon">{app.showCountry ? '👁' : '🙈'}</span>
+          <span id="country-eye-icon" aria-hidden="true">
+            {app.showCountry ? <Eye size={16} /> : <EyeOff size={16} />}
+          </span>
         </button>
       </div>
       <input
@@ -1107,7 +1124,9 @@ export default function Home() {
           className="icon-btn"
           onClick={() => mutate({ showCoords: !app.showCoords })}
         >
-          <span id="coords-eye-icon">{app.showCoords ? '👁' : '🙈'}</span>
+          <span id="coords-eye-icon" aria-hidden="true">
+            {app.showCoords ? <Eye size={16} /> : <EyeOff size={16} />}
+          </span>
         </button>
       </div>
       <div className="grid2">
@@ -1165,7 +1184,7 @@ export default function Home() {
     <section className="neo-section" id="section-marker">
       <h3 className="section-title">
         <span className="section-icon" aria-hidden="true">
-          📍
+          <MapPin size={14} strokeWidth={2.2} />
         </span>
         2. Marker & Route
       </h3>
@@ -1291,7 +1310,7 @@ export default function Home() {
     <section className="neo-section" id="section-style">
       <h3 className="section-title">
         <span className="section-icon" aria-hidden="true">
-          🎨
+          <Palette size={14} strokeWidth={2.2} />
         </span>
         3. Map Style
       </h3>
@@ -1366,7 +1385,7 @@ export default function Home() {
     <section className="neo-section" id="section-composition">
       <h3 className="section-title">
         <span className="section-icon" aria-hidden="true">
-          🧱
+          <Layers3 size={14} strokeWidth={2.2} />
         </span>
         4. Composition
       </h3>
@@ -1447,7 +1466,7 @@ export default function Home() {
     <section className="neo-section" id="section-typography">
       <h3 className="section-title">
         <span className="section-icon" aria-hidden="true">
-          🔤
+          <TypeIcon size={14} strokeWidth={2.2} />
         </span>
         5. Typography
       </h3>
@@ -1496,7 +1515,7 @@ export default function Home() {
     <section className="neo-section" id="section-mat">
       <h3 className="section-title">
         <span className="section-icon" aria-hidden="true">
-          🖼️
+          <Frame size={14} strokeWidth={2.2} />
         </span>
         6. Mat / Passepartout
       </h3>
@@ -1576,7 +1595,7 @@ export default function Home() {
     <section className="neo-section" id="section-output">
       <h3 className="section-title">
         <span className="section-icon" aria-hidden="true">
-          📐
+          <Ruler size={14} strokeWidth={2.2} />
         </span>
         7. Output Size
       </h3>
@@ -1643,7 +1662,7 @@ export default function Home() {
           onClick={() => setActiveMobile(activeMobile === 'a' ? null : 'a')}
         >
           <span className="mobile-nav-icon" aria-hidden="true">
-            🧭
+            <Compass size={18} strokeWidth={2.2} />
           </span>
         </button>
         <button
@@ -1656,7 +1675,7 @@ export default function Home() {
           onClick={() => setActiveMobile(activeMobile === 'b' ? null : 'b')}
         >
           <span className="mobile-nav-icon" aria-hidden="true">
-            🎨
+            <Palette size={18} strokeWidth={2.2} />
           </span>
         </button>
         <button
@@ -1669,7 +1688,7 @@ export default function Home() {
           onClick={() => setActiveMobile(activeMobile === 'c' ? null : 'c')}
         >
           <span className="mobile-nav-icon" aria-hidden="true">
-            📐
+            <Ruler size={18} strokeWidth={2.2} />
           </span>
         </button>
         <button
@@ -1680,7 +1699,7 @@ export default function Home() {
           onClick={() => setShowAboutModal(true)}
         >
           <span className="mobile-nav-icon" aria-hidden="true">
-            ℹ️
+            <BadgeInfo size={18} strokeWidth={2.2} />
           </span>
         </button>
         <button
@@ -1693,7 +1712,11 @@ export default function Home() {
           onClick={() => void exportPng()}
         >
           <span className="mobile-nav-icon" aria-hidden="true">
-            {exportStage === 'loading' ? '⏳' : exportStage === 'processing' ? '⚙️' : '⬇️'}
+            {exportStage === 'loading' || exportStage === 'processing' ? (
+              <Loader2 size={18} strokeWidth={2.2} className="spin" />
+            ) : (
+              <Download size={18} strokeWidth={2.2} />
+            )}
           </span>
         </button>
       </nav>
@@ -1706,7 +1729,10 @@ export default function Home() {
             onClick={() => setShowAboutModal(true)}
           >
             <strong>
-              <span aria-hidden="true">🗺️</span> Map Craft by KREASAI.COM
+              <span className="brand-icon" aria-hidden="true">
+                <MapPinned size={16} strokeWidth={2.2} />
+              </span>{' '}
+              Map Craft by KREASAI.COM
             </strong>
             <span>Neobrutal Map Artist</span>
           </button>
@@ -1727,7 +1753,13 @@ export default function Home() {
           disabled={exporting}
           onClick={() => void exportPng()}
         >
-          <span aria-hidden="true">⬇️ </span>
+          <span className="btn-icon" aria-hidden="true">
+            {exportStage === 'loading' || exportStage === 'processing' ? (
+              <Loader2 size={16} strokeWidth={2.2} className="spin" />
+            ) : (
+              <Download size={16} strokeWidth={2.2} />
+            )}
+          </span>
           {exportStage === 'loading'
             ? 'Loading map...'
             : exportStage === 'processing'

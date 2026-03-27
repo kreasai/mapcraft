@@ -30,27 +30,28 @@ select {
   background: repeating-linear-gradient(
     -35deg,
     #ffe87a,
-    #ffe87a 24px,
-    #fff0a6 24px,
-    #fff0a6 48px
+    #ffe87a 20px,
+    #fff0a6 20px,
+    #fff0a6 40px
   );
 }
 
 .desktop-sidebar {
-  width: 350px;
-  min-width: 350px;
+  width: clamp(280px, 26vw, 330px);
+  min-width: 280px;
+  max-width: 330px;
   display: flex;
   flex-direction: column;
-  border-right: 4px solid #111;
+  border-right: 2px solid #111;
   background: #ffffff;
-  box-shadow: 8px 0 0 #111;
+  box-shadow: 4px 0 0 #111;
   z-index: 5;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
 }
 
 .brand {
-  border-bottom: 4px solid #111;
-  padding: 14px;
+  border-bottom: 2px solid #111;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -60,48 +61,55 @@ select {
 .brand-btn {
   display: grid;
   gap: 4px;
-  border: 3px solid #111;
+  border: 2px solid #111;
   background: #fff3f3;
-  border-radius: 12px;
-  box-shadow: 4px 4px 0 #111;
-  padding: 10px 12px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 0 #111;
+  padding: 8px 10px;
   text-align: left;
   cursor: pointer;
 }
 
 .brand strong {
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1.15;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .brand span {
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
+}
+
+.brand-icon {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 4px;
 }
 
 .controls-scroll {
   overflow: visible;
-  padding: 12px;
+  padding: 10px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .neo-section {
-  border: 3px solid #111;
+  border: 2px solid #111;
   background: #fff;
-  box-shadow: 4px 4px 0 #111;
-  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 0 #111;
+  padding: 8px;
   display: grid;
-  gap: 7px;
+  gap: 6px;
 }
 
 .neo-section h3 {
   margin: 0 0 4px;
-  font-size: 13px;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 .section-title {
@@ -111,22 +119,22 @@ select {
 }
 
 .section-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #111;
-  border-radius: 8px;
+  border: 1.5px solid #111;
+  border-radius: 6px;
   background: #39e0ff;
-  box-shadow: 2px 2px 0 #111;
-  font-size: 12px;
+  box-shadow: 1px 1px 0 #111;
+  font-size: 11px;
 }
 
 .label-text {
   font-size: 10px;
   margin: 0;
-  font-weight: 700;
+  font-weight: 650;
   text-transform: uppercase;
 }
 
@@ -134,11 +142,11 @@ select {
 .neo-section select,
 .neo-section button,
 .search-list button {
-  border: 2px solid #111;
+  border: 1.5px solid #111;
   background: #fff;
-  border-radius: 8px;
-  padding: 7px 9px;
-  box-shadow: 2px 2px 0 #111;
+  border-radius: 7px;
+  padding: 6px 8px;
+  box-shadow: 1px 1px 0 #111;
 }
 
 .neo-section button.active,
@@ -150,14 +158,14 @@ select {
 .search-list button:active,
 .mobile-nav button:active,
 .modal-panel button:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 #111;
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 #111;
 }
 
 .search-list {
   display: grid;
-  gap: 6px;
-  max-height: 170px;
+  gap: 4px;
+  max-height: 150px;
   overflow-y: auto;
 }
 
@@ -165,13 +173,13 @@ select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
 }
 
 .grid2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 6px;
 }
 
 .grid3 {
@@ -194,31 +202,44 @@ select {
 
 .hint {
   margin: 0;
-  font-size: 11px;
+  font-size: 10px;
   opacity: 0.8;
 }
 
 .icon-btn {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .export-btn {
-  margin: 12px 12px 6px;
-  border: 3px solid #111;
+  margin: 10px 10px 4px;
+  border: 2px solid #111;
   background: #39e0ff;
-  box-shadow: 4px 4px 0 #111;
-  padding: 11px;
-  border-radius: 9px;
+  box-shadow: 2px 2px 0 #111;
+  padding: 9px;
+  border-radius: 8px;
   font-weight: 800;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #export-status {
-  padding: 0 12px;
-  margin-bottom: 6px;
+  padding: 0 10px;
+  margin-bottom: 4px;
 }
 
 .preview-main {
@@ -227,7 +248,7 @@ select {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 14px;
+  padding: 10px;
 }
 
 .poster-scaler {
@@ -236,8 +257,8 @@ select {
 
 .poster {
   position: relative;
-  border: 4px solid #111;
-  box-shadow: 10px 10px 0 #111;
+  border: 3px solid #111;
+  box-shadow: 6px 6px 0 #111;
   overflow: hidden;
 }
 
@@ -270,8 +291,8 @@ select {
 
 .poster-overlay h2 {
   margin: 0;
-  font-size: clamp(22px, 6.2vw, 76px);
-  letter-spacing: 0.12em;
+  font-size: clamp(20px, 5.2vw, 66px);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.03;
   text-wrap: balance;
@@ -280,7 +301,7 @@ select {
 .poster-overlay p {
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   font-size: clamp(10px, 1.1vw, 16px);
 }
 
@@ -332,8 +353,33 @@ select {
 }
 
 .mobile-nav-icon {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-icon svg,
+.mobile-nav-icon svg,
+.btn-icon svg,
+.icon-btn svg,
+.brand-icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .mobile-sheet,
@@ -366,18 +412,18 @@ select {
   max-height: 88vh;
   overflow-y: auto;
   background: #fff;
-  border: 4px solid #111;
-  box-shadow: 12px 12px 0 #111;
-  border-radius: 18px;
-  padding: 16px;
+  border: 2px solid #111;
+  box-shadow: 4px 4px 0 #111;
+  border-radius: 12px;
+  padding: 12px;
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .mobile-sheet-panel {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  margin-bottom: 88px;
+  margin-bottom: 68px;
 }
 
 .mobile-sheet-content {
@@ -417,10 +463,10 @@ select {
 .file-btn {
   display: inline-flex;
   align-items: center;
-  border: 2px solid #111;
-  border-radius: 8px;
-  padding: 8px 10px;
-  box-shadow: 3px 3px 0 #111;
+  border: 1.5px solid #111;
+  border-radius: 7px;
+  padding: 6px 8px;
+  box-shadow: 1px 1px 0 #111;
 }
 
 .file-btn input {
@@ -432,6 +478,46 @@ select {
 }
 
 @media (max-width: 1024px) {
+  .desktop-sidebar {
+    display: none;
+  }
+
+  .preview-main {
+    padding: 6px;
+    padding-bottom: 64px;
+  }
+
+  .poster {
+    box-shadow: 3px 3px 0 #111;
+  }
+
+  .mobile-sheet-panel {
+    width: calc(100% - 12px);
+    margin: 0 6px 60px;
+    max-height: 68vh;
+    padding: 10px;
+    gap: 8px;
+    border-width: 2px;
+    box-shadow: 4px 4px 0 #111;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .mobile-sheet-content {
+    gap: 8px;
+  }
+
+  .mobile-sheet .neo-section {
+    box-shadow: 1px 1px 0 #111;
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .mobile-sheet .neo-section h3 {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 1120px) {
   .app-shell {
     min-height: 100dvh;
   }
@@ -447,18 +533,18 @@ select {
     bottom: 6px;
     left: 6px;
     right: 6px;
-    grid-template-columns: 1fr 1fr 1fr auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr auto;
     gap: 6px;
   }
 
   .mobile-nav button {
-    border: 2px solid #111;
-    border-radius: 10px;
+    border: 1.5px solid #111;
+    border-radius: 8px;
     background: #fff;
-    box-shadow: 3px 3px 0 #111;
-    padding: 9px 6px;
+    box-shadow: 2px 2px 0 #111;
+    padding: 8px 4px;
     font-weight: 700;
-    min-height: 44px;
+    min-height: 40px;
     font-size: 0;
   }
 
@@ -468,35 +554,26 @@ select {
   }
 
   .preview-main {
-    padding: 8px;
-    padding-bottom: 72px;
-  }
-
-  .mobile-sheet-panel {
-    width: calc(100% - 10px);
-    margin: 0 5px 66px;
-    max-height: 68vh;
-    padding: 12px;
-    gap: 10px;
-    border-width: 3px;
-    box-shadow: 8px 8px 0 #111;
-  }
-
-  .mobile-sheet-content {
-    gap: 10px;
-  }
-
-  .mobile-sheet .neo-section {
-    box-shadow: 3px 3px 0 #111;
-    padding: 8px;
-    gap: 6px;
-  }
-
-  .mobile-sheet .neo-section h3 {
-    font-size: 12px;
+    padding: 6px;
+    padding-bottom: 64px;
   }
 
   .poster {
-    box-shadow: 6px 6px 0 #111;
+    box-shadow: 3px 3px 0 #111;
+  }
+}
+
+@media (max-width: 1360px) {
+  .desktop-sidebar {
+    width: 300px;
+    min-width: 300px;
+  }
+
+  .brand strong {
+    font-size: 14px;
+  }
+
+  .poster {
+    box-shadow: 5px 5px 0 #111;
   }
 }
