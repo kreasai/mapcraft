@@ -25,7 +25,7 @@ select {
 }
 
 .app-shell {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   background: repeating-linear-gradient(
     -35deg,
@@ -37,61 +37,94 @@ select {
 }
 
 .desktop-sidebar {
-  width: 390px;
-  min-width: 390px;
-  max-height: 100vh;
+  width: 350px;
+  min-width: 350px;
   display: flex;
   flex-direction: column;
   border-right: 4px solid #111;
   background: #ffffff;
-  box-shadow: 12px 0 0 #111;
+  box-shadow: 8px 0 0 #111;
   z-index: 5;
+  padding-bottom: 10px;
 }
 
 .brand {
   border-bottom: 4px solid #111;
-  padding: 20px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   background: #ff5d5d;
 }
 
+.brand-btn {
+  display: grid;
+  gap: 4px;
+  border: 3px solid #111;
+  background: #fff3f3;
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 #111;
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
 .brand strong {
-  font-size: 24px;
+  font-size: 18px;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
 }
 
 .brand span {
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
 }
 
 .controls-scroll {
-  overflow-y: auto;
-  padding: 16px;
+  overflow: visible;
+  padding: 12px;
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .neo-section {
   border: 3px solid #111;
   background: #fff;
-  box-shadow: 5px 5px 0 #111;
-  padding: 12px;
+  box-shadow: 4px 4px 0 #111;
+  padding: 10px;
   display: grid;
-  gap: 8px;
+  gap: 7px;
 }
 
 .neo-section h3 {
   margin: 0 0 4px;
-  font-size: 14px;
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #111;
+  border-radius: 8px;
+  background: #39e0ff;
+  box-shadow: 2px 2px 0 #111;
+  font-size: 12px;
 }
 
 .label-text {
-  font-size: 11px;
+  font-size: 10px;
   margin: 0;
   font-weight: 700;
   text-transform: uppercase;
@@ -104,8 +137,8 @@ select {
   border: 2px solid #111;
   background: #fff;
   border-radius: 8px;
-  padding: 8px 10px;
-  box-shadow: 3px 3px 0 #111;
+  padding: 7px 9px;
+  box-shadow: 2px 2px 0 #111;
 }
 
 .neo-section button.active,
@@ -124,7 +157,7 @@ select {
 .search-list {
   display: grid;
   gap: 6px;
-  max-height: 220px;
+  max-height: 170px;
   overflow-y: auto;
 }
 
@@ -166,18 +199,26 @@ select {
 }
 
 .icon-btn {
-  width: 42px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
 }
 
 .export-btn {
-  margin: 16px;
+  margin: 12px 12px 6px;
   border: 3px solid #111;
   background: #39e0ff;
-  box-shadow: 6px 6px 0 #111;
-  padding: 14px;
-  border-radius: 10px;
+  box-shadow: 4px 4px 0 #111;
+  padding: 11px;
+  border-radius: 9px;
   font-weight: 800;
   text-transform: uppercase;
+  font-size: 12px;
+}
+
+#export-status {
+  padding: 0 12px;
+  margin-bottom: 6px;
 }
 
 .preview-main {
@@ -186,7 +227,7 @@ select {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 24px;
+  padding: 14px;
 }
 
 .poster-scaler {
@@ -196,7 +237,7 @@ select {
 .poster {
   position: relative;
   border: 4px solid #111;
-  box-shadow: 14px 14px 0 #111;
+  box-shadow: 10px 10px 0 #111;
   overflow: hidden;
 }
 
@@ -229,15 +270,18 @@ select {
 
 .poster-overlay h2 {
   margin: 0;
-  font-size: clamp(28px, 8vw, 96px);
-  letter-spacing: 0.18em;
+  font-size: clamp(22px, 6.2vw, 76px);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  line-height: 1.03;
+  text-wrap: balance;
 }
 
 .poster-overlay p {
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.18em;
+  font-size: clamp(10px, 1.1vw, 16px);
 }
 
 .divider {
@@ -285,6 +329,11 @@ select {
 
 .mobile-nav {
   display: none;
+}
+
+.mobile-nav-icon {
+  font-size: 18px;
+  line-height: 1;
 }
 
 .mobile-sheet,
@@ -383,6 +432,10 @@ select {
 }
 
 @media (max-width: 1024px) {
+  .app-shell {
+    min-height: 100dvh;
+  }
+
   .desktop-sidebar {
     display: none;
   }
@@ -391,20 +444,22 @@ select {
     display: grid;
     position: fixed;
     z-index: 70;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
+    bottom: 6px;
+    left: 6px;
+    right: 6px;
     grid-template-columns: 1fr 1fr 1fr auto;
-    gap: 8px;
+    gap: 6px;
   }
 
   .mobile-nav button {
-    border: 3px solid #111;
-    border-radius: 12px;
+    border: 2px solid #111;
+    border-radius: 10px;
     background: #fff;
-    box-shadow: 4px 4px 0 #111;
-    padding: 12px 8px;
+    box-shadow: 3px 3px 0 #111;
+    padding: 9px 6px;
     font-weight: 700;
+    min-height: 44px;
+    font-size: 0;
   }
 
   .mobile-nav button.active,
@@ -413,12 +468,35 @@ select {
   }
 
   .preview-main {
-    padding-bottom: 90px;
+    padding: 8px;
+    padding-bottom: 72px;
   }
 
   .mobile-sheet-panel {
-    width: calc(100% - 8px);
-    margin: 0 4px 86px;
-    max-height: 72vh;
+    width: calc(100% - 10px);
+    margin: 0 5px 66px;
+    max-height: 68vh;
+    padding: 12px;
+    gap: 10px;
+    border-width: 3px;
+    box-shadow: 8px 8px 0 #111;
+  }
+
+  .mobile-sheet-content {
+    gap: 10px;
+  }
+
+  .mobile-sheet .neo-section {
+    box-shadow: 3px 3px 0 #111;
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .mobile-sheet .neo-section h3 {
+    font-size: 12px;
+  }
+
+  .poster {
+    box-shadow: 6px 6px 0 #111;
   }
 }

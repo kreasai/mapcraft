@@ -1036,7 +1036,12 @@ export default function Home() {
 
   const sectionLocation = (
     <section className="neo-section" id="section-location">
-      <h3>1. Define Location</h3>
+      <h3 className="section-title">
+        <span className="section-icon" aria-hidden="true">
+          🧭
+        </span>
+        1. Define Location
+      </h3>
       <p className="label-text">Search City</p>
       <input
         id="search-input"
@@ -1158,7 +1163,12 @@ export default function Home() {
 
   const sectionMarkerRoute = (
     <section className="neo-section" id="section-marker">
-      <h3>2. Marker & Route</h3>
+      <h3 className="section-title">
+        <span className="section-icon" aria-hidden="true">
+          📍
+        </span>
+        2. Marker & Route
+      </h3>
 
       <div className="row-between">
         <span>Show Location Marker</span>
@@ -1279,7 +1289,12 @@ export default function Home() {
 
   const sectionStyle = (
     <section className="neo-section" id="section-style">
-      <h3>3. Map Style</h3>
+      <h3 className="section-title">
+        <span className="section-icon" aria-hidden="true">
+          🎨
+        </span>
+        3. Map Style
+      </h3>
       <div className="segmented">
         <button
           id="mode-tile"
@@ -1349,7 +1364,12 @@ export default function Home() {
 
   const sectionComposition = (
     <section className="neo-section" id="section-composition">
-      <h3>4. Composition</h3>
+      <h3 className="section-title">
+        <span className="section-icon" aria-hidden="true">
+          🧱
+        </span>
+        4. Composition
+      </h3>
       <p className="label-text" id="zoom-value">
         Perspective Zoom: {app.zoom}
       </p>
@@ -1425,7 +1445,12 @@ export default function Home() {
 
   const sectionTypography = (
     <section className="neo-section" id="section-typography">
-      <h3>5. Typography</h3>
+      <h3 className="section-title">
+        <span className="section-icon" aria-hidden="true">
+          🔤
+        </span>
+        5. Typography
+      </h3>
       <p className="label-text">City Font</p>
       <select
         id="city-font-select"
@@ -1469,7 +1494,12 @@ export default function Home() {
 
   const sectionMat = (
     <section className="neo-section" id="section-mat">
-      <h3>6. Mat / Passepartout</h3>
+      <h3 className="section-title">
+        <span className="section-icon" aria-hidden="true">
+          🖼️
+        </span>
+        6. Mat / Passepartout
+      </h3>
       <div className="row-between">
         <span>Enable Mat</span>
         <input
@@ -1544,7 +1574,12 @@ export default function Home() {
 
   const sectionOutput = (
     <section className="neo-section" id="section-output">
-      <h3>7. Output Size</h3>
+      <h3 className="section-title">
+        <span className="section-icon" aria-hidden="true">
+          📐
+        </span>
+        7. Output Size
+      </h3>
 
       <div className="grid2">
         {QUICK_PRESETS.map((preset) => (
@@ -1603,43 +1638,63 @@ export default function Home() {
           type="button"
           data-target="mobile-sheet-a"
           className={activeMobile === 'a' ? 'active' : ''}
+          aria-label="Location"
+          title="Location"
           onClick={() => setActiveMobile(activeMobile === 'a' ? null : 'a')}
         >
-          Location
+          <span className="mobile-nav-icon" aria-hidden="true">
+            🧭
+          </span>
         </button>
         <button
           id="nav-btn-b"
           type="button"
           data-target="mobile-sheet-b"
           className={activeMobile === 'b' ? 'active' : ''}
+          aria-label="Style"
+          title="Style"
           onClick={() => setActiveMobile(activeMobile === 'b' ? null : 'b')}
         >
-          Style
+          <span className="mobile-nav-icon" aria-hidden="true">
+            🎨
+          </span>
         </button>
         <button
           id="nav-btn-c"
           type="button"
           data-target="mobile-sheet-c"
           className={activeMobile === 'c' ? 'active' : ''}
+          aria-label="Output"
+          title="Output"
           onClick={() => setActiveMobile(activeMobile === 'c' ? null : 'c')}
         >
-          Output
+          <span className="mobile-nav-icon" aria-hidden="true">
+            📐
+          </span>
         </button>
-        <button id="nav-btn-d" type="button" onClick={() => setShowAboutModal(true)}>
-          About
+        <button
+          id="nav-btn-d"
+          type="button"
+          aria-label="About"
+          title="About"
+          onClick={() => setShowAboutModal(true)}
+        >
+          <span className="mobile-nav-icon" aria-hidden="true">
+            ℹ️
+          </span>
         </button>
         <button
           id="mobile-export-btn"
           type="button"
           className="export-fab"
+          aria-label="Export"
+          title="Export"
           disabled={exporting}
           onClick={() => void exportPng()}
         >
-          {exportStage === 'loading'
-            ? 'Loading...'
-            : exportStage === 'processing'
-              ? 'Processing...'
-              : 'Export'}
+          <span className="mobile-nav-icon" aria-hidden="true">
+            {exportStage === 'loading' ? '⏳' : exportStage === 'processing' ? '⚙️' : '⬇️'}
+          </span>
         </button>
       </nav>
 
@@ -1650,7 +1705,9 @@ export default function Home() {
             className="brand-btn"
             onClick={() => setShowAboutModal(true)}
           >
-            <strong>Map Craft by KREASAI.COM</strong>
+            <strong>
+              <span aria-hidden="true">🗺️</span> Map Craft by KREASAI.COM
+            </strong>
             <span>Neobrutal Map Artist</span>
           </button>
         </div>
@@ -1670,6 +1727,7 @@ export default function Home() {
           disabled={exporting}
           onClick={() => void exportPng()}
         >
+          <span aria-hidden="true">⬇️ </span>
           {exportStage === 'loading'
             ? 'Loading map...'
             : exportStage === 'processing'
@@ -1904,7 +1962,7 @@ export default function Home() {
             key={mobileSheet}
             className="mobile-sheet"
             id={`mobile-sheet-${mobileSheet}`}
-            style={{ display: isOpen ? 'block' : 'none' }}
+            style={{ display: isOpen ? 'flex' : 'none' }}
           >
             <button
               type="button"
